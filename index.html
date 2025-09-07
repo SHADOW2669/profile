@@ -181,7 +181,7 @@
 
         /* Section Title Styling */
         .section-title-container { /* Wrapper for centering and spacing */
-            text-align: center; 
+            text-align: center;
             margin-bottom: 4rem; /* Increased bottom margin */
         }
         .section-title {
@@ -203,7 +203,7 @@
 
         /* Navigation Styles */
         header {
-            position: sticky; top: 0; z-index: 100; width: 100%; 
+            position: sticky; top: 0; z-index: 100; width: 100%;
             background-color: rgba(0, 0, 0, 0.85); /* Dark, slightly transparent background */
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px); /* For Safari */
@@ -214,12 +214,12 @@
         .logo-name a:hover { color: #cccccc; text-shadow: 0 0 8px rgba(204, 204, 204, 0.4); }
         nav a.nav-link {
             padding: 0.75rem 1.25rem; /* Generous padding */
-            border-radius: 0.375rem; 
+            border-radius: 0.375rem;
             transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease, border-bottom-color 0.3s ease, box-shadow 0.2s ease;
             color: #aaaaaa; /* Medium gray for nav links */
             font-weight: 500; /* Medium weight */
-            position: relative; 
-            border-bottom: 2px solid transparent; 
+            position: relative;
+            border-bottom: 2px solid transparent;
         }
         nav a.nav-link:hover {
             color: #ffffff; /* White on hover */
@@ -228,7 +228,7 @@
             background-color: rgba(255,255,255,0.05); /* Subtle background highlight */
         }
         nav a.nav-link.active {
-            color: #ffffff; 
+            color: #ffffff;
             font-weight: 600; /* Bolder active link */
             border-bottom-color: #eeeeee; /* Bright underline for active link */
             background-color: rgba(255,255,255,0.08);
@@ -240,7 +240,7 @@
         #mobile-menu a { display: block; padding: 0.85rem 1.5rem; text-align: center; border-radius: 0; transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; color: #aaaaaa; font-weight: 500; }
         #mobile-menu a:hover { background-color: rgba(51, 51, 51, 0.5); color: #ffffff; }
         #mobile-menu a.active {
-            background-color: rgba(68, 68, 68, 0.7); 
+            background-color: rgba(68, 68, 68, 0.7);
             color: #ffffff;
             font-weight: 600;
         }
@@ -250,7 +250,7 @@
         .animate-letters .letter { display: inline-block; line-height: 1em; opacity: 0; }
         
         /* Skill Bar Styling */
-        .skill-bar-fill { 
+        .skill-bar-fill {
             width: 0%; /* Initial width for animation */
             background-image: linear-gradient(to right, #888888, #666666) !important; /* Brighter gray gradient for skill bars */
         }
@@ -272,11 +272,129 @@
         .experience-item p.text-sm, .workshop-item p.text-sm { /* For dates/locations */
             color: #aaaaaa;
         }
-        /* Workshop specific list styling (though toggle is removed, keeping general style for modal if needed) */
-        .workshop-topics-list .topic-main { font-weight: 600; color: #c5c5c5; }
-        .workshop-topics-list .topic-detail { /* display: none; */ padding-left: 1rem; color: #b5b5b5;} /* display:none removed as toggle is gone */
-        /* .workshop-topics-list .topic-detail.expanded { display: list-item; } */ /* No longer needed */
 
+        /* --- Experience Timeline Styles --- */
+        .timeline-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* REMOVED the ::after pseudo-element for the static line */
+        .timeline-container::after {
+           display: none;
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            opacity: 0; /* Initial state for animation */
+        }
+        /* The circles on the timeline */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: #444;
+            border: 4px solid #777;
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .timeline-item:hover::after {
+            background-color: #999;
+            transform: scale(1.1);
+        }
+        /* Place the container to the left */
+        .timeline-left {
+            left: 0;
+        }
+        /* Place the container to the right */
+        .timeline-right {
+            left: 50%;
+        }
+        /* Add arrows to the left container (pointing right) */
+        .timeline-left .timeline-content::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 20px; /* Adjusted from -20px */
+            border: medium solid #333;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent #1e1e1e;
+        }
+        /* Add arrows to the right container (pointing left) */
+        .timeline-right .timeline-content::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 20px; /* Adjusted from -20px */
+            border: medium solid #333;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #1e1e1e transparent transparent;
+        }
+        /* Fix the circle for containers on the right side */
+        .timeline-right::after {
+            left: -10px;
+        }
+        .timeline-content {
+           position: relative;
+        }
+
+        /* --- SVG Path Animation Styles (NEW) --- */
+        .timeline-svg-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none; /* Allows clicks on items behind it */
+        }
+        #timeline-path {
+            stroke-dasharray: 1; /* These will be set by JS */
+            stroke-dashoffset: 1;
+        }
+        /* Removed #path-marker CSS, styles are now inline on the SVG element */
+
+
+        /* Media queries - Responsive timeline */
+        @media screen and (max-width: 768px) {
+            /* Keep the old ::after for the line on mobile for simplicity */
+            .timeline-container::after { 
+                display: block; /* Re-enable for mobile */
+                content: '';
+                position: absolute;
+                width: 6px;
+                background-color: #444;
+                top: 0;
+                bottom: 0;
+                left: 31px; 
+                margin-left: -3px;
+            }
+             .timeline-svg-wrapper {
+                display: none; /* Hide SVG animation on mobile */
+            }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-left, .timeline-right { left: 0%; }
+            .timeline-left .timeline-content::before, .timeline-right .timeline-content::before {
+                left: -20px; /* This needs fixing - it should be `right` on left items */
+                border-width: 10px 10px 10px 0;
+                border-color: transparent #1e1e1e transparent transparent;
+            }
+             .timeline-left .timeline-content::before {
+                left: 50px; /* Reposition arrow to point from the line */
+             }
+            .timeline-left::after, .timeline-right::after { left: 21px; }
+        }
 
         /* General Section Padding */
         section { padding-top: 5rem; padding-bottom: 5rem; width: 100%; } /* Default section padding */
@@ -326,21 +444,21 @@
 
 
         /* Consistent Button Styling */
-        .btn-primary, .btn-secondary, .btn-tertiary { 
-            display: inline-flex; 
+        .btn-primary, .btn-secondary, .btn-tertiary {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem; 
-            font-weight: 500; 
-            padding: 0.625rem 1.25rem; 
-            border-radius: 0.5rem; 
+            gap: 0.5rem;
+            font-weight: 500;
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
             transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             text-align: center;
-            min-height: 44px; 
-            min-width: 44px; 
-            border: 2px solid transparent; 
+            min-height: 44px;
+            min-width: 44px;
+            border: 2px solid transparent;
         }
-        .btn-primary { 
+        .btn-primary {
             background-image: linear-gradient(to right, #666666 0%, #444444 100%);
             color: #ffffff;
             border-color: #555555;
@@ -348,20 +466,20 @@
         .btn-primary:hover {
             background-image: linear-gradient(to right, #777777 0%, #555555 100%);
             border-color: #777777;
-            transform: translateY(-2px) scale(1.02); 
+            transform: translateY(-2px) scale(1.02);
             box-shadow: 0 4px 12px rgba(200,200,200,0.15);
         }
 
-        .btn-secondary { 
+        .btn-secondary {
             background-color: transparent;
             border: 2px solid #555555;
             color: #bbbbbb;
         }
         .btn-secondary:hover {
-            background-color: rgba(85, 85, 85, 0.2); 
+            background-color: rgba(85, 85, 85, 0.2);
             color: #dddddd;
             border-color: #777777;
-            transform: translateY(-2px) scale(1.02); 
+            transform: translateY(-2px) scale(1.02);
             box-shadow: 0 4px 12px rgba(200,200,200,0.1);
         }
          .btn-tertiary { /* For "See More/Less" button - keeping style if used elsewhere, but not for workshop toggle now */
@@ -378,22 +496,22 @@
             color: #cccccc;
         }
         
-        .btn-outline-gray { 
+        .btn-outline-gray {
             border: 2px solid #555555;
             color: #bbbbbb;
         }
         .btn-outline-gray:hover {
-            background-color: rgba(85, 85, 85, 0.2); 
+            background-color: rgba(85, 85, 85, 0.2);
             color: #dddddd;
             border-color: #777777;
-            transform: translateY(-2px) scale(1.02); 
+            transform: translateY(-2px) scale(1.02);
             box-shadow: 0 4px 12px rgba(200,200,200,0.15);
         }
-        .project-details-link { 
-            color: #bbbbbb; 
-            text-decoration: none; 
-            position: relative; 
-            padding-bottom: 2px; 
+        .project-details-link {
+            color: #bbbbbb;
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 2px;
         }
         .project-details-link::after {
             content: '';
@@ -401,19 +519,19 @@
             width: 0;
             height: 1px;
             display: block;
-            margin-top: 2px; 
+            margin-top: 2px;
             right: 0;
-            background: #dddddd; 
+            background: #dddddd;
             transition: width .3s ease, background-color .3s ease;
             -webkit-transition: width .3s ease, background-color .3s ease;
         }
         .project-details-link:hover::after {
             width: 100%;
             left: 0;
-            background-color: #ffffff; 
+            background-color: #ffffff;
         }
         .project-details-link:hover {
-            color: #ffffff; 
+            color: #ffffff;
         }
 
         /* Section Divider */
@@ -432,7 +550,7 @@
         }
 
         /* Tech Stack Specific Styles */
-        .tech-icon-grid { 
+        .tech-icon-grid {
         }
         .tech-icon {
             display: flex;
@@ -440,20 +558,20 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            background-color: #2a2a2a; 
-            border-radius: 0.5rem; 
+            background-color: #2a2a2a;
+            border-radius: 0.5rem;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            min-height: 100px; 
-            opacity: 0; 
+            min-height: 100px;
+            opacity: 0;
         }
         .tech-icon:hover {
-            transform: translateY(-4px) scale(1.05); 
+            transform: translateY(-4px) scale(1.05);
             box-shadow: 0 6px 15px rgba(200,200,200,0.12);
         }
-        .tech-icon svg { 
+        .tech-icon svg {
             width: 40px;
             height: 40px;
-            margin-bottom: 0.5rem; 
+            margin-bottom: 0.5rem;
             color: #aaaaaa;
             transition: color 0.2s ease;
         }
@@ -461,10 +579,10 @@
             color: #cccccc;
         }
         .tech-icon span {
-            font-size: 0.875rem; 
+            font-size: 0.875rem;
             color: #bbbbbb;
             transition: color 0.2s ease;
-            text-align: center; 
+            text-align: center;
         }
         .tech-icon:hover span {
             color: #dddddd;
@@ -582,20 +700,19 @@
             40% { transform: scale(1.0); }
         }
 
-
     </style>
 </head>
 <body class="antialiased">
 
-    <header class="shadow-lg"> 
+    <header class="shadow-lg">
         <div class="header-container container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <div class="text-2xl font-bold animate-on-load logo-name">
                 <a href="#hero" class="block py-2">SHADOW</a>
             </div>
-            <nav id="main-nav" class="hidden md:flex items-center space-x-1"> 
+            <nav id="main-nav" class="hidden md:flex items-center space-x-1">
                 <a href="#about" class="animate-on-load nav-link">About</a>
                 <a href="#skills" class="animate-on-load nav-link">Skills</a>
-                <a href="#tech-stack" class="animate-on-load nav-link">Tech</a> 
+                <a href="#tech-stack" class="animate-on-load nav-link">Tech</a>
                 <a href="#portfolio" class="animate-on-load nav-link">Portfolio</a>
                 <a href="#experience" class="animate-on-load nav-link">Experience</a>
                 <a href="#contact" class="animate-on-load nav-link">Contact</a>
@@ -609,7 +726,7 @@
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full shadow-xl">
             <a href="#about" class="block text-base font-medium nav-link">About</a>
             <a href="#skills" class="block text-base font-medium nav-link">Skills</a>
-            <a href="#tech-stack" class="block text-base font-medium nav-link">Tech</a> 
+            <a href="#tech-stack" class="block text-base font-medium nav-link">Tech</a>
             <a href="#portfolio" class="block text-base font-medium nav-link">Portfolio</a>
             <a href="#experience" class="block text-base font-medium nav-link">Experience</a>
             <a href="#contact" class="block text-base font-medium nav-link">Contact</a>
@@ -621,7 +738,7 @@
             <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 animate-letters hero-title">
                 Hi, I'm SHADOW
             </h1>
-            <p class="text-xl sm:text-2xl md:text-3xl font-medium mb-10 animate-on-load hero-subtitle"> 
+            <p class="text-xl sm:text-2xl md:text-3xl font-medium mb-10 animate-on-load hero-subtitle">
                 Innovative Technologist Focused on Network & Security | Crafting Solutions in Networking, Cybersecurity, AI & Web Dev
             </p>
             <a href="#portfolio" class="font-bold py-4 px-10 rounded-full text-lg animate-on-load hero-cta">
@@ -643,13 +760,13 @@
                 <h2 class="text-4xl font-bold section-title">About Me</h2>
             </div>
             <div class="text-center mb-12 animate-on-scroll" data-delay="50">
-                <p class="text-2xl font-semibold text-gray-300">Dedicated Technologist | Network & Security Enthusiast | Avid Coder</p> 
+                <p class="text-2xl font-semibold text-gray-300">Dedicated Technologist | Network & Security Enthusiast | Avid Coder</p>
             </div>
             <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
                 <div class="md:w-1/3 text-center animate-on-scroll about-image" data-delay="150">
                     <img src="https://avatars.githubusercontent.com/u/197274423?v=4" alt="SHADOW - Professional Profile Picture" class="rounded-full mx-auto shadow-2xl w-56 h-56 md:w-72 md:h-72 object-cover border-4 border-gray-700 hover:border-gray-500 transition-colors duration-300" onerror="this.onerror=null; this.src='https://placehold.co/320x320/1a1a1a/eeeeee?text=Profile';">
                 </div>
-                <div class="md:w-2/3 animate-on-scroll about-text text-center md:text-left" data-delay="250"> 
+                <div class="md:w-2/3 animate-on-scroll about-text text-center md:text-left" data-delay="250">
                     <p class="text-lg sm:text-xl leading-relaxed mb-5">
                         Hello! I'm SHADOW, a dedicated and forward-thinking technology enthusiast currently advancing my studies with a Bachelor of Computer Applications (BCA) in the vibrant tech landscape of Mangaluru. My core passion lies in architecting elegant solutions at the confluence of networking, cybersecurity, artificial intelligence, and web development. I thrive on transforming complex challenges into intuitive and impactful digital experiences.
                     </p>
@@ -722,10 +839,10 @@
                     </div>
                 </div>
                 <div class="p-6 rounded-lg shadow-xl animate-on-scroll skill-item card">
-                    <h3 class="text-xl font-semibold mb-3 text-gray-200">Full-Stack Web Development</h3> 
+                    <h3 class="text-xl font-semibold mb-3 text-gray-200">Full-Stack Web Development</h3>
                     <p class="text-sm">HTML5, CSS3, JavaScript , PHP, RESTful APIs.</p>
-                    <div class="w-full skill-bar-bg rounded-full h-3 overflow-hidden mt-2"> 
-                        <div class="h-3 rounded-full skill-bar-fill" data-level="85%"></div> 
+                    <div class="w-full skill-bar-bg rounded-full h-3 overflow-hidden mt-2">
+                        <div class="h-3 rounded-full skill-bar-fill" data-level="85%"></div>
                     </div>
                 </div>
             </div>
@@ -816,12 +933,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <div class="rounded-lg overflow-hidden shadow-xl project-card card animate-on-scroll">
                     <div class="project-thumbnail-container">
-                        <img src="https://placehold.co/600x400/1a1a1a/eeeeee?text=CivicEye+Platform" alt="CivicEye Web Platform Thumbnail" class="w-full h-52 object-cover"> 
+                        <img src="https://placehold.co/600x400/1a1a1a/eeeeee?text=CivicEye+Platform" alt="CivicEye Web Platform Thumbnail" class="w-full h-52 object-cover">
                         <div class="project-thumbnail-overlay">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
                         </div>
                     </div>
-                    <div class="p-7 project-content"> 
+                    <div class="p-7 project-content">
                         <div>
                             <h3 class="text-xl font-semibold mb-2 text-gray-100 project-title">CivicEye - Smart City Initiative</h3>
                             <p class="text-sm project-summary mb-5">A comprehensive full-stack platform for intelligent civic issue detection and management, leveraging AI for real-time violation analysis. Built with Python (Flask), PHP, MySQL, and modern frontend frameworks.</p>
@@ -852,7 +969,7 @@
                             data-title="CivicEye - AI Detection Engine (Desktop)"
                             data-image="https://placehold.co/800x500/1a1a1a/eeeeee?text=CivicEye+AI+Interface"
                             data-description="The CivicEye Desktop Application serves as the core AI processing unit. Developed in Python with Tkinter/ttkbootstrap for the GUI, it integrates a custom-trained YOLOv8 model via Ultralytics and OpenCV for video stream analysis (local files, webcams, RTSP). Users can operate in online mode (syncing data with the CivicEye web platform via API) or offline mode (local data storage). Features include adjustable detection sensitivity (Fast, Balanced, Quality), light/dark themes, and robust error handling. This application showcases practical AI implementation for real-world problem-solving."
-                            data-live-link="#" 
+                            data-live-link="#"
                             data-code-link="https://github.com/shadow-dev-placeholder/civiceye-ai-engine">
                             View Details <span class="inline-block transform transition-transform duration-200 group-hover:translate-x-1.5">&rarr;</span>
                         </a>
@@ -874,8 +991,8 @@
                             data-title="Homelab & Self-Hosted Cloud Infrastructure"
                             data-image="https://placehold.co/800x500/1a1a1a/eeeeee?text=Proxmox+Dashboard+View"
                             data-description="My personal homelab is a testament to my passion for systems administration and self-hosting. It runs on an Intel i5-4570T with 16GB RAM, virtualized with Proxmox VE. Key services include: TrueNAS SCALE for ZFS-based network storage and application hosting (Docker); multiple Ubuntu Server VMs for hosting web applications (like CivicEye LAMP stack), development environments, and experimental services. Network security is managed with UFW, and services are exposed securely to the internet using Cloudflare Tunnels and Nginx Proxy Manager for SSL termination and reverse proxying. This setup allows for continuous learning in DevOps, networking, and system resilience."
-                            data-live-link="#" 
-                            data-code-link="#"> 
+                            data-live-link="#"
+                            data-code-link="#">
                             Read More <span class="inline-block transform transition-transform duration-200 group-hover:translate-x-1.5">&rarr;</span>
                         </a>
                     </div>
@@ -891,64 +1008,83 @@
             <div class="section-title-container animate-on-scroll">
                 <h2 class="text-4xl font-bold section-title">Journey & Milestones</h2>
             </div>
-            <div class="space-y-10 max-w-3xl mx-auto"> 
-                <!-- Current Internship at Cybersapiens -->
-                <div class="p-7 rounded-lg shadow-xl animate-on-scroll experience-item card">
-                    <h3 class="text-xl font-semibold text-gray-200">Intern & Trainee</h3>
-                    <p class="font-medium mb-1">Cybersapiens</p>
-                    <p class="text-sm mb-3">July 2025 - Present</p>
-                    <ul class="list-disc list-inside space-y-1.5 text-sm">
-                        <li>Focusing on Web Application Management (WAM) through structured training and hands-on projects.</li>
-                        <li>Gaining practical experience in web development and operations within a professional environment.</li>
-                    </ul>
+            <div class="timeline-container">
+                <div class="timeline-svg-wrapper" aria-hidden="true">
+                    <svg width="100%" height="100%" viewBox="0 0 200 800" preserveAspectRatio="xMidYMin slice">
+                        <!-- Changed path to a straight line -->
+                        <path id="timeline-path"
+                              d="M 100 0 L 100 800"
+                              stroke="#444" stroke-width="3" fill="none" />
+                    </svg>
+                    <!-- Replaced div with an SVG for the F1 car marker -->
+                    <svg id="path-marker" width="24" height="48" viewBox="0 0 24 48" style="overflow: visible; position: absolute; opacity: 0; z-index: 2;">
+                        <!-- Group to center the car on the SVG's (0,0) origin, which will be moved by anime.js -->
+                        <g transform="translate(-12, -24)">
+                            <!-- The car drawing (centered around 12,24 in its own coordinate space) -->
+                            <!-- Main Body - light gray -->
+                            <path d="M12 0 L8 12 L6 14 L6 34 L8 36 L12 48 L16 36 L18 34 L18 14 L16 12 Z" fill="#e0e0e0"/>
+                            <!-- Front wing - dark gray -->
+                            <path d="M4 10 L20 10 L19 14 L5 14 Z" fill="#555555"/>
+                            <!-- Rear wing - dark gray -->
+                            <path d="M5 36 L19 36 L18 40 L6 40 Z" fill="#555555"/>
+                            <!-- Driver helmet - red -->
+                            <circle cx="12" cy="20" r="3" fill="#ff0000"/>
+                        </g>
+                    </svg>
                 </div>
-                <!-- Internship at Sierra -->
-                <div class="p-7 rounded-lg shadow-xl animate-on-scroll experience-item card" data-delay="100">
-                    <h3 class="text-xl font-semibold text-gray-200">Internship: UI/UX & Web Design</h3>
-                    <p class="font-medium mb-1">Sierra  | Mangalore, India</p>
-                    <p class="text-sm mb-3">February 2025 - May 2025</p>
-                    <ul class="list-disc list-inside space-y-1.5 text-sm">
-                        <li>Contributed to the design of web applications with a focus on intuitive UI/UX principles.</li>
-                        <li>Developed and maintained a design system to ensure consistency across projects.</li>
-                        <li>Utilized Framer for interactive prototypes and presentation of design concepts .</li>
-                        <li>Gained hands-on experience with typography and website presentation to create compelling user interfaces.</li>
-                    </ul>
-                </div>
-                <div class="p-7 rounded-lg shadow-xl animate-on-scroll workshop-item card"> 
-                    <h3 class="text-xl font-semibold text-gray-200">Workshop: Ethical Hacking</h3>
-                    <p class="font-medium mb-1">Tech Training Institute  | Intensive Program</p>
-                    <p class="text-sm mb-3">Completed: March 2025 </p>
-                    <p class="text-sm mb-4 text-gray-300">
-                        Successfully completed an intensive workshop on Ethical Hacking, covering a comprehensive range of offensive and defensive security techniques. Key areas included network scanning, vulnerability assessment, web application security, wireless hacking, and malware analysis.
-                    </p>
-                    <div class="mt-4 text-center sm:text-left flex flex-wrap gap-3 items-center">
-                        <a href="#certificate-ethical-hacking" target="_blank" class="btn-secondary text-sm inline-flex items-center view-certificate-button" 
-                           data-certificate-title="Ethical Hacking Workshop Certificate & Topics Covered"
-                           data-certificate-image="https://placehold.co/800x600/1a1a1a/eeeeee?text=Ethical+Hacking+Certificate"
-                           data-certificate-details="<ul class='list-disc list-inside space-y-1.5 text-sm' style='text-align: left; padding-left: 20px;'><li>Introduction to Ethical Hacking: Concepts, Hacker Types (Black/White/Gray Hat), Red/Blue Teams.</li><li>Virtualization: VMware/VirtualBox setup &amp; configuration (Windows, Linux, macOS).</li><li>Linux Fundamentals: Kali Linux basics, commands, file system, editors (vi, vim, nano), permissions, package management, IP addressing, Netcat.</li><li>Networking Concepts: LAN/MAN/WAN, IP Addresses (Classes), MAC Addresses, CAM Tables, Routers, Switches, Hubs.</li><li>Security Infrastructure: IDS/IPS, Firewalls (Stateful/Stateless), Proxy Servers, Honeypots.</li><li>Information Gathering &amp; Scanning: Passive/Active reconnaissance, DNS, Google Dorking, Shodan, Port scanning (Nmap), Firewall bypass (Nmap, Hping3).</li><li>Wireless &amp; Network Attacks: Wi-Fi hacking, Packet Sniffing, Man-in-the-Middle (MITM) attacks.</li><li>Malware Threats: Malware types, Virus/Spyware creation concepts.</li><li>Denial of Service: DoS/DDoS concepts, attack types, and performance.</li><li>Social Engineering: Techniques and information gathering.</li><li>Web Server Hacking: Vulnerability discovery (Nmap Scripting Engine, Metasploit), Directory Traversal, Log Cracking, Backdoors, FTP exploitation.</li><li>Web Application Hacking: OWASP Top 10, SQL Injection (Manual &amp; SQLMap), Cross-Site Scripting (XSS types &amp; attacks).</li><li>Mobile Platform Hacking: Android platform, Payload creation &amp; deployment (BeEF, MITM, Social Engineering).</li><li>Steganography: Concepts, case studies, and usage.</li><li>Cryptography: Fundamentals, communication security, encryption types.</li></ul>">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 12l2.25 2.25L15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            View Certification & Topics
-                        </a>
+
+                <div class="timeline-item timeline-left">
+                    <div class="p-7 rounded-lg shadow-xl experience-item card timeline-content">
+                        <h3 class="text-xl font-semibold text-gray-200">Intern & Trainee</h3>
+                        <p class="font-medium mb-1">Cybersapiens</p>
+                        <p class="text-sm mb-3">July 2025 - Present</p>
+                        <p class="text-sm">Focused on Web Application Management (WAM) and gaining hands-on experience in web development and operations.</p>
                     </div>
                 </div>
-                <div class="p-7 rounded-lg shadow-xl animate-on-scroll experience-item card" data-delay="200">
-                    <h3 class="text-xl font-semibold text-gray-200">Bachelor of Computer Applications (BCA)</h3>
-                    <p class="font-medium mb-1">Mangalore Academy of Professional Studies (Mangalore University) | Mangalore</p>
-                    <p class="text-sm mb-3">2022 - Expected Graduation: June 2025</p>
-                    <ul class="list-disc list-inside space-y-1.5 text-sm">
-                        <li>Specialization Focus: Cloud Computing, Artificial Intelligence, Data Analytics.</li>
-                        <li>Key Coursework: Data Structures & Algorithms, Cloud Computing, Software Engineering, Database Management Systems.</li>
-                        <li>Academic Achievement: Consistent Dean's List Honoree (GPA: 7/10).</li>
-                    </ul>
+        
+                <div class="timeline-item timeline-right">
+                    <div class="p-7 rounded-lg shadow-xl experience-item card timeline-content">
+                        <h3 class="text-xl font-semibold text-gray-200">Internship: UI/UX & Web Design</h3>
+                        <p class="font-medium mb-1">Sierra | Mangalore, India</p>
+                        <p class="text-sm mb-3">February 2025 - May 2025</p>
+                        <p class="text-sm">Contributed to web app design focusing on UI/UX, developed a design system, and created prototypes using Framer.</p>
+                    </div>
                 </div>
-                <div class="text-center mt-12 animate-on-scroll" data-delay="300"> 
-                    <a href="https://example.com/path-to/SHADOW_Resume_2025.pdf" target="_blank" class="btn-primary btn-outline-gray text-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 inline-block mr-2"> <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /> </svg>
-                        Download Full Resume
-                    </a>
+        
+                <div class="timeline-item timeline-left">
+                    <div class="p-7 rounded-lg shadow-xl workshop-item card timeline-content">
+                        <h3 class="text-xl font-semibold text-gray-200">Workshop: Ethical Hacking</h3>
+                        <p class="font-medium mb-1">Remarkskill | NITK Surathkal</p>
+                        <p class="text-sm mb-3">Completed: March 2025</p>
+                        <p class="text-sm mb-4 text-gray-300">
+                            Completed an intensive 2 day workshop covering a comprehensive range of offensive and defensive security techniques.
+                        </p>
+                        <div class="mt-4">
+                            <a href="#" class="btn-secondary text-sm inline-flex items-center view-certificate-button"
+                                data-certificate-title="Ethical Hacking Workshop Certificate & Topics Covered"
+                                data-certificate-image="https://placehold.co/800x600/1a1a1a/eeeeee?text=Ethical+Hacking+Certificate"
+                                data-certificate-details="<ul class='list-disc list-inside space-y-1.5 text-sm' style='text-align: left; padding-left: 20px;'><li>Introduction to Ethical Hacking: Concepts, Hacker Types (Black/White/Gray Hat), Red/Blue Teams.</li><li>Virtualization: VMware/VirtualBox setup &amp; configuration (Windows, Linux, macOS).</li><li>Linux Fundamentals: Kali Linux basics, commands, file system, editors (vi, vim, nano), permissions, package management, IP addressing, Netcat.</li><li>Networking Concepts: LAN/MAN/WAN, IP Addresses (Classes), MAC Addresses, CAM Tables, Routers, Switches, Hubs.</li><li>Security Infrastructure: IDS/IPS, Firewalls (Stateful/Stateless), Proxy Servers, Honeypots.</li><li>Information Gathering &amp; Scanning: Passive/Active reconnaissance, DNS, Google Dorking, Shodan, Port scanning (Nmap), Firewall bypass (Nmap, Hping3).</li><li>Wireless &amp; Network Attacks: Wi-Fi hacking, Packet Sniffing, Man-in-the-Middle (MITM) attacks.</li><li>Malware Threats: Malware types, Virus/Spyware creation concepts.</li><li>Denial of Service: DoS/DDoS concepts, attack types, and performance.</li><li>Social Engineering: Techniques and information gathering.</li><li>Web Server Hacking: Vulnerability discovery (Nmap Scripting Engine, Metasploit), Directory Traversal, Log Cracking, Backdoors, FTP exploitation.</li><li>Web Application Hacking: OWASP Top 10, SQL Injection (Manual &amp; SQLMap), Cross-Site Scripting (XSS types &amp; attacks).</li><li>Mobile Platform Hacking: Android platform, Payload creation &amp; deployment (BeEF, MITM, Social Engineering).</li><li>Steganography: Concepts, case studies, and usage.</li><li>Cryptography: Fundamentals, communication security, encryption types.</li></ul>">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 12l2.25 2.25L15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                View Certification
+                            </a>
+                        </div>
+                    </div>
                 </div>
+        
+                <div class="timeline-item timeline-right">
+                    <div class="p-7 rounded-lg shadow-xl experience-item card timeline-content">
+                        <h3 class="text-xl font-semibold text-gray-200">Bachelor of Computer Applications (BCA)</h3>
+                        <p class="font-medium mb-1">Mangalore Academy of Professional Studies</p>
+                        <p class="text-sm mb-3">2022 - Expected Graduation: June 2025</p>
+                         <p class="text-sm">Specializing in Cloud Computing, AI, and Data Analytics with key coursework in Data Structures & Algorithms.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12 animate-on-scroll" data-delay="300">
+                <a href="https://example.com/path-to/SHADOW_Resume_2025.pdf" target="_blank" class="btn-primary btn-outline-gray text-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 inline-block mr-2"> <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /> </svg>
+                    Download Full Resume
+                </a>
             </div>
         </div>
     </section>
@@ -986,11 +1122,10 @@
         </div>
     </footer>
 
-    <!-- Project Details Modal -->
     <div id="project-modal-overlay" class="modal-overlay">
         <div id="project-modal-content" class="modal-content">
             <button id="modal-close-button" class="modal-close-btn" aria-label="Close modal">&times;</button>
-            <img id="modal-project-image" src="https://placehold.co/800x500/1a1a1a/eeeeee?text=Project+Image" alt="Project Image" class="mb-4"> 
+            <img id="modal-project-image" src="https://placehold.co/800x500/1a1a1a/eeeeee?text=Project+Image" alt="Project Image" class="mb-4">
             <h3 id="modal-project-title" class="text-2xl font-bold mb-2">Project Title</h3>
             <div class="flex justify-between items-center mb-4">
                  <p id="modal-project-description" class="text-base leading-relaxed flex-grow">Detailed project description goes here.</p>
@@ -1003,27 +1138,24 @@
                     View Live Site
                 </a>
                 <a href="#" id="modal-source-code-link" target="_blank" class="btn-secondary text-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3L6.75 16.5" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" /></svg>
                     View Source Code
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- AI Assistant FAB -->
     <button id="ai-assistant-fab" title="Ask My AI Assistant">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
         </svg>
     </button>
 
-    <!-- AI Chat Modal -->
     <div id="ai-chat-modal-overlay" class="modal-overlay">
         <div id="ai-chat-modal-content" class="modal-content">
             <button id="ai-chat-modal-close-button" class="modal-close-btn" aria-label="Close modal">&times;</button>
             <div id="ai-chat-messages">
-                <!-- Chat messages will be appended here -->
-            </div>
+                </div>
             <div id="ai-chat-input-container">
                 <input type="text" id="ai-chat-input" placeholder="Ask about my skills, projects, etc.">
                 <button id="ai-chat-send-btn">Send</button>
@@ -1036,7 +1168,7 @@
         // --- Mobile Menu Toggle ---
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        const siteBody = document.body; 
+        const siteBody = document.body;
 
         if (menuButton && mobileMenu) {
             menuButton.addEventListener('click', () => {
@@ -1045,7 +1177,7 @@
                 mobileMenu.classList.toggle('hidden');
             });
 
-            mobileMenu.querySelectorAll('a.nav-link').forEach(link => { 
+            mobileMenu.querySelectorAll('a.nav-link').forEach(link => {
                 link.addEventListener('click', () => {
                     menuButton.setAttribute('aria-expanded', 'false');
                     mobileMenu.classList.add('hidden');
@@ -1054,9 +1186,9 @@
         }
 
         // --- Smooth Scrolling & Nav Highlighting (Scroll Spy) ---
-        const sections = document.querySelectorAll('section[id]'); 
-        const navLinks = document.querySelectorAll('#main-nav a.nav-link, #mobile-menu a.nav-link'); 
-        const headerOffset = 70; 
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('#main-nav a.nav-link, #mobile-menu a.nav-link');
+        const headerOffset = 70;
 
         const activateNavLink = (linkToActivate) => {
             navLinks.forEach(nav => nav.classList.remove('active'));
@@ -1073,12 +1205,12 @@
         let scrollTimeout;
         const onScroll = () => {
             clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => { 
+            scrollTimeout = setTimeout(() => {
                 const scrollY = window.pageYOffset;
                 let currentSectionId = null;
 
                 sections.forEach(section => {
-                    const sectionTop = section.offsetTop - headerOffset - 1; 
+                    const sectionTop = section.offsetTop - headerOffset - 1;
                     const sectionHeight = section.offsetHeight;
                     const sectionId = section.getAttribute('id');
 
@@ -1087,25 +1219,25 @@
                     }
                 });
 
-                if ((window.innerHeight + scrollY) >= document.body.offsetHeight - 50) { 
+                if ((window.innerHeight + scrollY) >= document.body.offsetHeight - 50) {
                     currentSectionId = 'contact';
                 } else if (sections.length > 0 && scrollY < sections[0].offsetTop - headerOffset - 1 && currentSectionId !== 'hero') {
-                    if (scrollY < (document.getElementById('hero')?.offsetHeight || 0) / 2) { 
+                    if (scrollY < (document.getElementById('hero')?.offsetHeight || 0) / 2) {
                         currentSectionId = 'hero';
                     }
                 }
 
                 const activeLink = currentSectionId ? (document.querySelector(`#main-nav a[href="#${currentSectionId}"]`) || document.querySelector(`#mobile-menu a[href="#${currentSectionId}"]`)) : null;
                 activateNavLink(activeLink);
-            }, 50); 
+            }, 50);
         };
 
         window.addEventListener('scroll', onScroll);
         document.addEventListener('DOMContentLoaded', () => {
-            onScroll(); 
+            onScroll();
             initializeAnimations();
             initializeGeminiFeatures();
-        }); 
+        });
 
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1114,7 +1246,7 @@
                     const targetElement = document.querySelector(targetId);
                     if (!targetElement) {
                         console.warn(`Smooth scroll target not found: ${targetId}`);
-                        return; 
+                        return;
                     }
                     if (mobileMenu && !mobileMenu.classList.contains('hidden') && menuButton) {
                         menuButton.setAttribute('aria-expanded', 'false');
@@ -1134,9 +1266,9 @@
         if (typeof particlesJS !== 'undefined') {
             particlesJS('particles-js', {
                 "particles": {
-                    "number": { "value": 100, "density": { "enable": true, "value_area": 800 } }, 
-                    "color": { "value": ["#aaaaaa", "#bbbbbb", "#cccccc"] }, 
-                    "shape": { "type": "triangle", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 4 } }, 
+                    "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": ["#aaaaaa", "#bbbbbb", "#cccccc"] },
+                    "shape": { "type": "triangle", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 4 } },
                     "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 0.5, "opacity_min": 0.2, "sync": false } },
                     "size": { "value": 2.5, "random": true, "anim": { "enable": true, "speed": 2, "size_min": 0.5, "sync": false } },
                     "line_linked": { "enable": true, "distance": 110, "color": "#999999", "opacity": 0.35, "width": 1 },
@@ -1158,22 +1290,22 @@
                 return;
             }
 
-            anime({ 
-                targets: '.hero-content-wrapper > *:not(.hero-cta)', 
-                opacity: [0, 1], translateY: [20, 0], 
-                delay: anime.stagger(150, {start: 300}), 
+            anime({
+                targets: '.hero-content-wrapper > *:not(.hero-cta)',
+                opacity: [0, 1], translateY: [20, 0],
+                delay: anime.stagger(150, {start: 300}),
                 duration: 800, easing: 'easeOutExpo'
             });
-            anime({ 
+            anime({
                 targets: '.hero-cta',
                 opacity: [0, 1], translateY: [20,0],
-                delay: 750, 
+                delay: 750,
                 duration: 800, easing: 'easeOutExpo'
             });
-            anime({ 
+            anime({
                 targets: '.animate-on-load.logo-name, .animate-on-load.nav-link',
-                opacity: [0, 1], translateY: [-20, 0], 
-                delay: anime.stagger(100, { start: 100 }), 
+                opacity: [0, 1], translateY: [-20, 0],
+                delay: anime.stagger(100, { start: 100 }),
                 duration: 700, easing: 'easeOutCubic'
             });
 
@@ -1186,14 +1318,14 @@
                         translateY: ["1.2em", 0], translateX: ["0.6em", 0], translateZ: 0,
                         rotateZ: [200, 0], opacity: [0, 1],
                         duration: 850, easing: "easeOutExpo",
-                        delay: anime.stagger(60, { start: 600 }) 
+                        delay: anime.stagger(60, { start: 600 })
                     });
             } else { console.warn("Hero title element for letter animation not found."); }
 
             const observerOptions = {
-                root: null, 
-                rootMargin: '0px 0px -100px 0px', 
-                threshold: 0.1 
+                root: null,
+                rootMargin: '0px 0px -100px 0px',
+                threshold: 0.1
             };
 
             const observerCallback = (entries, observer) => {
@@ -1201,33 +1333,77 @@
                     if (entry.isIntersecting) {
                         const target = entry.target;
 
-                        if (target.classList.contains('animate-on-scroll') && !target.classList.contains('section-title-container') && !target.classList.contains('tech-icon-grid')) {
-                            if(target.classList.contains('section-title-container')) { // This condition seems to conflict with the outer one, keeping as is from original.
-                                const titleEl = target.querySelector('.section-title');
-                                if (titleEl && !titleEl.classList.contains('animating')) {
-                                    titleEl.classList.add('animating', 'animate-underline');
-                                    anime({
-                                        targets: titleEl, opacity: [0, 1], translateY: [20, 0],
-                                        duration: 700, easing: 'easeOutCubic',
-                                        complete: () => titleEl.classList.remove('animating')
-                                    });
-                                }
-                            } else {
-                                if (!target.classList.contains('animating')) {
-                                    target.classList.add('animating');
-                                    anime({
-                                        targets: target,
-                                        translateY: [40, 0],
-                                        opacity: [0, 1],
-                                        scale: [0.97, 1],
-                                        duration: 1000,
-                                        easing: 'easeOutExpo',
-                                        delay: target.dataset.delay ? parseInt(target.dataset.delay) : 0,
-                                        complete: () => target.classList.remove('animating')
-                                    });
-                                }
+                        if (target.classList.contains('animate-on-scroll')) {
+                            if (!target.classList.contains('animating')) {
+                                target.classList.add('animating');
+                                anime({
+                                    targets: target,
+                                    translateY: [40, 0],
+                                    opacity: [0, 1],
+                                    scale: [0.97, 1],
+                                    duration: 1000,
+                                    easing: 'easeOutExpo',
+                                    delay: target.dataset.delay ? parseInt(target.dataset.delay) : 0,
+                                    complete: () => target.classList.remove('animating')
+                                });
                             }
-                            observer.unobserve(target); 
+                            observer.unobserve(target);
+                        }
+                        
+                        // --- MODIFIED: Timeline Animation Logic ---
+                        if (target.classList.contains('timeline-container') && !target.classList.contains('animating')) {
+                            target.classList.add('animating');
+                            
+                            // For mobile, use the old, simpler animation
+                            if (window.innerWidth <= 768) {
+                                anime({
+                                    targets: '.timeline-item',
+                                    opacity: [0, 1],
+                                    translateX: [-30, 0],
+                                    delay: anime.stagger(250, {start: 500}),
+                                    duration: 800,
+                                    easing: 'easeOutExpo',
+                                });
+                            } else {
+                                // --- NEW: SVG Path Animation for Desktop ---
+                                const path = anime.path('#timeline-path');
+                                const pathEl = document.querySelector('#timeline-path');
+                                if (!pathEl) return;
+                                const pathLength = pathEl.getTotalLength();
+                                pathEl.style.strokeDasharray = pathLength;
+                                pathEl.style.strokeDashoffset = pathLength;
+                                
+                                const careerPathAnimation = anime.timeline({
+                                    easing: 'easeOutExpo',
+                                    duration: 4000
+                                });
+
+                                careerPathAnimation
+                                    .add({
+                                        targets: '#timeline-path',
+                                        strokeDashoffset: [pathLength, 0],
+                                        easing: 'easeInOutSine',
+                                        duration: 4000
+                                    })
+                                    .add({
+                                        targets: '#path-marker',
+                                        translateX: path('x'),
+                                        translateY: path('y'),
+                                        opacity: [0, 1, 1, 0], // Fade in, travel, fade out
+                                        easing: 'easeInOutSine',
+                                        duration: 4000
+                                    }, 0)
+                                    .add({
+                                        targets: '.timeline-item',
+                                        opacity: [0, 1],
+                                        translateX: (el) => {
+                                            return el.classList.contains('timeline-left') ? [-40, 0] : [40, 0];
+                                        },
+                                        delay: (el, i) => 500 + i * 800, // Stagger items to appear along the path
+                                        duration: 1000,
+                                    }, 0);
+                            }
+                            observer.unobserve(target);
                         }
                         
                         if (target.classList.contains('tech-icon-grid') && !target.classList.contains('animating')) {
@@ -1248,9 +1424,9 @@
                         if (target.classList.contains('section-title') && !target.classList.contains('animating-underline-direct')) {
                              target.classList.add('animating-underline-direct', 'animate-underline');
                              anime({
-                                 targets: target, opacity: [0, 1], translateY: [20, 0],
-                                 duration: 700, easing: 'easeOutCubic',
-                                 complete: () => target.classList.remove('animating-underline-direct')
+                                targets: target, opacity: [0, 1], translateY: [20, 0],
+                                duration: 700, easing: 'easeOutCubic',
+                                complete: () => target.classList.remove('animating-underline-direct')
                             });
                             observer.unobserve(target);
                         }
@@ -1259,11 +1435,11 @@
                             target.classList.add('animating');
                             const level = target.dataset.level || '0%';
                             anime({
-                                targets: target, 
-                                width: level, 
-                                duration: 1500, 
-                                easing: 'easeInOutQuart', 
-                                delay: 250, 
+                                targets: target,
+                                width: level,
+                                duration: 1500,
+                                easing: 'easeInOutQuart',
+                                delay: 250,
                                 complete: () => target.classList.remove('animating')
                             });
                             observer.unobserve(target);
@@ -1273,22 +1449,17 @@
             };
 
             const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
-            document.querySelectorAll('.animate-on-scroll, .skill-bar-fill, .tech-icon-grid, .section-title').forEach(el => {
-                if (el.classList.contains('animate-on-scroll') && !el.classList.contains('hero-content-wrapper > *')) { 
-                    if(!el.classList.contains('tech-icon-grid') && !el.classList.contains('section-title-container')) { 
-                        el.style.opacity = '0'; 
-                        if (!el.classList.contains('section-title')) { 
-                             el.style.transform = 'translateY(50px)';
-                        }
-                    }
+            document.querySelectorAll('.animate-on-scroll, .skill-bar-fill, .tech-icon-grid, .section-title, .timeline-container').forEach(el => {
+                if (el.classList.contains('animate-on-scroll')) {
+                     el.style.opacity = '0';
                 }
                 scrollObserver.observe(el);
             });
-        } 
+        }
 
         // --- Project Modal & Certificate Modal Functionality ---
         const modalOverlay = document.getElementById('project-modal-overlay');
-        const modalContent = document.getElementById('project-modal-content'); 
+        const modalContent = document.getElementById('project-modal-content');
         const modalCloseButton = document.getElementById('modal-close-button');
         const modalProjectImage = document.getElementById('modal-project-image');
         const modalProjectTitle = document.getElementById('modal-project-title');
@@ -1307,18 +1478,18 @@
             }
             modalProjectTitle.textContent = title;
             modalProjectImage.src = imageUrl;
-            modalProjectImage.alt = title + (isCertificate ? " certificate" : " project image"); 
-            modalProjectDescription.innerHTML = description; 
+            modalProjectImage.alt = title + (isCertificate ? " certificate" : " project image");
+            modalProjectDescription.innerHTML = description;
             modalProjectDescription.dataset.original = description; // Store original for reset
 
             const projectLinksDiv = modalContent.querySelector('.modal-project-links');
             const enhanceBtn = document.getElementById('enhance-description-btn');
 
             if (isCertificate) {
-                if(projectLinksDiv) projectLinksDiv.style.display = 'none'; 
+                if(projectLinksDiv) projectLinksDiv.style.display = 'none';
                 if(enhanceBtn) enhanceBtn.style.display = 'none';
             } else {
-                if(projectLinksDiv) projectLinksDiv.style.display = 'flex'; 
+                if(projectLinksDiv) projectLinksDiv.style.display = 'flex';
                 if(enhanceBtn) enhanceBtn.style.display = 'inline-flex';
                 
                 if (liveLink && liveLink !== "#" && liveLink !== "null" && liveLink !== "undefined") {
@@ -1337,24 +1508,24 @@
             }
             
             modalOverlay.classList.add('active');
-            siteBody.classList.add('modal-open'); 
-            modalContent.scrollTop = 0; 
+            siteBody.classList.add('modal-open');
+            modalContent.scrollTop = 0;
         }
 
         function closeModal(overlay) {
             if (!overlay) return;
             overlay.classList.remove('active');
-            siteBody.classList.remove('modal-open'); 
+            siteBody.classList.remove('modal-open');
         }
 
         viewProjectLinks.forEach(link => {
             link.addEventListener('click', function(event) {
-                event.preventDefault(); 
+                event.preventDefault();
                 const title = this.dataset.title;
                 const image = this.dataset.image;
                 const description = this.dataset.description;
-                const liveLink = this.dataset.liveLink; 
-                const codeLink = this.dataset.codeLink; 
+                const liveLink = this.dataset.liveLink;
+                const codeLink = this.dataset.codeLink;
                 openModal(title, image, description, liveLink, codeLink, false);
             });
         });
@@ -1365,7 +1536,7 @@
                 const title = this.dataset.certificateTitle;
                 const image = this.dataset.certificateImage;
                 const details = this.dataset.certificateDetails;
-                openModal(title, image, details, null, null, true); 
+                openModal(title, image, details, null, null, true);
             });
         });
 
@@ -1387,7 +1558,7 @@
         // --- Gemini API Integration ---
         function initializeGeminiFeatures() {
             const apiKey = ""; // API key will be provided by the environment
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
             // --- Feature 1: AI Project Description Enhancer ---
             const enhanceBtn = document.getElementById('enhance-description-btn');
